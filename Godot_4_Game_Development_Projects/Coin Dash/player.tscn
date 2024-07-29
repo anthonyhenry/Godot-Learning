@@ -86,3 +86,5 @@ offset = Vector2(0, -5)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2, -0.5)
 shape = SubResource("RectangleShape2D_5dmdv")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

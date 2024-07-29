@@ -1,5 +1,8 @@
 extends Area2D
 
+signal pickup
+signal hurt
+
 @export var speed = 350
 var velocity = Vector2.ZERO
 var screensize = Vector2(480, 720)
@@ -39,3 +42,14 @@ func die():
 	$AnimatedSprite2D.animation = "hurt"
 	# Stop calling the process function every frame
 	set_process(false)
+
+
+# This function runs whenever another area node overlaps with this node.
+	# The overlapping area gets passed in as the area parameter
+func _on_area_entered(area):
+	if area.is_in_group("coins"):
+		area.pickup()
+		pickup.emit()
+	if area.is_in_group("obstacles"):
+		hurt.emit()
+		die()
