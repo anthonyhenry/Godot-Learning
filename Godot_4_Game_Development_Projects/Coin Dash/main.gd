@@ -15,6 +15,8 @@ func _ready():
 	$Player.screensize = screensize
 	$Player.hide() # hide() makes a node invisible
 	#new_game() # Re-enable this for testing
+	$HUD.update_score(score)
+	$HUD.update_timer(time_left)
 
 func new_game():
 	playing = true
@@ -43,3 +45,39 @@ func _process(delta):
 		time_left += 5
 		# spawn coins for the next level
 		spawn_coins()
+
+# Code that runs every time the GameTimer goes off (every second)
+func _on_game_timer_timeout():
+	# Decrement time_left
+	time_left -= 1
+	# Update timer in HUD
+	$HUD.update_timer(time_left)
+	# End game if no time left
+	if(time_left <= 0):
+		game_over()
+
+# Player pickup coin signal
+func _on_player_pickup():
+	# Increment score
+	score += 1
+	# Update score in HUD
+	$HUD.update_score(score)
+
+# Player hurt signal
+func _on_player_hurt():
+	game_over()
+
+func game_over():
+	# Stop game
+	playing = false
+	$GameTimer.stop()
+	# Remove all coins
+	get_tree().call_group("coins", "queue_free")
+	# Run game over function in HUD
+	$HUD.show_game_over()
+	# Kill the player
+	$Player.die()
+
+# HUD start_game signal
+func _on_hud_start_game():
+	new_game()
