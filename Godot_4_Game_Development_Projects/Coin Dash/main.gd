@@ -29,6 +29,8 @@ func new_game():
 	spawn_coins()
 	
 func spawn_coins():
+	#Play LevelSound
+	$LevelSound.play()
 	# Create as many coins as the current level + 4
 	for i in level + 4:
 		var c = coin_scene.instantiate()
@@ -58,6 +60,8 @@ func _on_game_timer_timeout():
 
 # Player pickup coin signal
 func _on_player_pickup():
+	# Play CoinSound
+	$CoinSound.play()
 	# Increment score
 	score += 1
 	# Update score in HUD
@@ -68,6 +72,8 @@ func _on_player_hurt():
 	game_over()
 
 func game_over():
+	#Play End Sound
+	$EndSound.play();
 	# Stop game
 	playing = false
 	$GameTimer.stop()
