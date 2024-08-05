@@ -47,6 +47,8 @@ func _process(delta):
 		time_left += 5
 		# spawn coins for the next level
 		spawn_coins()
+		#start powerup timer
+		$PowerupTimer.start()
 
 # Code that runs every time the GameTimer goes off (every second)
 func _on_game_timer_timeout():
@@ -59,13 +61,21 @@ func _on_game_timer_timeout():
 		game_over()
 
 # Player pickup coin signal
-func _on_player_pickup():
-	# Play CoinSound
-	$CoinSound.play()
-	# Increment score
-	score += 1
-	# Update score in HUD
-	$HUD.update_score(score)
+func _on_player_pickup(type):
+	match type: # match is Godot's version of a switch statement
+		"coin":
+			# Play CoinSound
+			$CoinSound.play()
+			# Increment score
+			score += 1
+			# Update score in HUD
+			$HUD.update_score(score)
+		"powerup":
+			# Play the powerup sound
+			$PowerupSound.play()
+			# Add more time
+			time_left += 5
+			$HUD.update_timer(time_left)
 
 # Player hurt signal
 func _on_player_hurt():
@@ -87,3 +97,10 @@ func game_over():
 # HUD start_game signal
 func _on_hud_start_game():
 	new_game()
+
+@export var powerup_scene : PackedScene
+func _on_powerup_timer_timeout():
+	var p = powerup_scene.instantiate()
+	add_child(p)
+	p.screensize = screensize
+	p.position = Vector2(randi_range(0, screensize.x), randi_range(0, screensize.y))
