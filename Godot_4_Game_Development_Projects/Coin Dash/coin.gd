@@ -24,3 +24,10 @@ func _on_timer_timeout():
 	# Play the animation starting from frame 0
 	$AnimatedSprite2D.frame = 0
 	$AnimatedSprite2D.play()
+
+
+func _on_area_entered(area):
+	# Check if the coin is on an obstacle
+	if area.is_in_group("obstacles"):
+		# Move the coin
+		position = Vector2(randi_range(0, screensize.x), randi_range(0, screensize.y))

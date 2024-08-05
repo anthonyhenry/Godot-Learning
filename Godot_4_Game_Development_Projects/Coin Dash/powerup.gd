@@ -19,3 +19,10 @@ func pickup():
 func _on_lifetime_timeout():
 	# Delete powerup after 2 seconds
 	queue_free()
+
+
+func _on_area_entered(area):
+	# Check if the powerup is on an obstacle
+	if area.is_in_group("obstacles"):
+		# Move the powerup
+		position = Vector2(randi_range(0, screensize.x), randi_range(0, screensize.y))
