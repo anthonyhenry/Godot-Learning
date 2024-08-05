@@ -2,6 +2,10 @@ extends Area2D
 
 var screensize = Vector2.ZERO
 
+func _ready():
+	# Have the animation start after 3-8 seconds
+	$Timer.start(randf_range(3,8))
+
 # This function gets called by the player script when the player overlaps with a coin
 func pickup():
 	# This is how you disable collision
@@ -14,3 +18,9 @@ func pickup():
 	await tw.finished
 	# queue_free() is Godot's methos for removing nodes
 	queue_free()
+
+
+func _on_timer_timeout():
+	# Play the animation starting from frame 0
+	$AnimatedSprite2D.frame = 0
+	$AnimatedSprite2D.play()
