@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://ug5db5l20270"]
+[gd_scene load_steps=5 format=3 uid="uid://ug5db5l20270"]
 
+[ext_resource type="Script" path="res://hud.gd" id="1_b6d55"]
 [ext_resource type="FontFile" uid="uid://cdk60bgpnj0tr" path="res://assets/Kenney Bold.ttf" id="1_u28kc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_df3v8"]
@@ -11,6 +12,7 @@ font = ExtResource("1_u28kc")
 font_size = 24
 
 [node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_b6d55")
 
 [node name="CenterText" type="Label" parent="."]
 anchors_preset = 14
@@ -25,7 +27,7 @@ text = "Coin Dash!"
 label_settings = SubResource("LabelSettings_df3v8")
 horizontal_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="Text" type="MarginContainer" parent="."]
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 36.0
@@ -33,20 +35,20 @@ grow_horizontal = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 10
 
-[node name="Time" type="Label" parent="MarginContainer"]
+[node name="Time" type="Label" parent="Text"]
 layout_mode = 2
-text = "30"
+text = "time"
 label_settings = SubResource("LabelSettings_ua5rc")
 vertical_alignment = 1
 
-[node name="Score" type="Label" parent="MarginContainer"]
+[node name="Score" type="Label" parent="Text"]
 layout_mode = 2
-text = "0"
+text = "score"
 label_settings = SubResource("LabelSettings_ua5rc")
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="MarginContainer2" type="MarginContainer" parent="."]
+[node name="Buttons" type="MarginContainer" parent="."]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -60,14 +62,18 @@ grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 8
 
-[node name="StartButton" type="Button" parent="MarginContainer2"]
+[node name="StartButton" type="Button" parent="Buttons"]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_fonts/font = ExtResource("1_u28kc")
 text = "Start"
 
-[node name="ExitButton" type="Button" parent="MarginContainer2"]
+[node name="ExitButton" type="Button" parent="Buttons"]
 layout_mode = 2
 size_flags_vertical = 8
 theme_override_fonts/font = ExtResource("1_u28kc")
 text = "Exit"
+
+[connection signal="play_game" from="." to="." method="_on_play_game"]
+[connection signal="pressed" from="Buttons/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Buttons/ExitButton" to="." method="_on_exit_button_pressed"]
