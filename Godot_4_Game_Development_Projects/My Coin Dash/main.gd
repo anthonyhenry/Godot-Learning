@@ -15,10 +15,16 @@ func _process(delta):
 
 func _on_hud_play_game():
 	playingGame = true
+	$GameTimer.start()
 	
 func _input(event):
 	if event.is_action_pressed("pause"):
-		playingGame = !playingGame
-		if playingGame == false:
+		# Pause game if running
+		if playingGame:
 			$HUD.showText("Paused")
-		print_debug("pause")
+			playingGame = false
+
+func _on_game_timer_timeout():
+	if playingGame and timeRemaining > 0:
+		timeRemaining -= 1
+		$HUD.update_timer(timeRemaining)
