@@ -1,7 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://m7a5mxtoeswn"]
+[gd_scene load_steps=3 format=3 uid="uid://m7a5mxtoeswn"]
 
 [ext_resource type="PackedScene" uid="uid://ug5db5l20270" path="res://hud.tscn" id="1_7v1a1"]
+[ext_resource type="Texture2D" uid="uid://bw64bquacpxh8" path="res://assets/grass.png" id="2_h2hhq"]
 
 [node name="Main" type="Node"]
+
+[node name="Background" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_h2hhq")
+stretch_mode = 1
 
 [node name="HUD" parent="." instance=ExtResource("1_7v1a1")]

@@ -12,7 +12,7 @@ font_size = 24
 
 [node name="HUD" type="CanvasLayer"]
 
-[node name="Message" type="Label" parent="."]
+[node name="CenterText" type="Label" parent="."]
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
@@ -25,29 +25,15 @@ text = "Coin Dash!"
 label_settings = SubResource("LabelSettings_df3v8")
 horizontal_alignment = 1
 
-[node name="Button" type="Button" parent="."]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -44.0
-offset_top = -32.0
-offset_right = 44.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_vertical = 8
-theme_override_fonts/font = ExtResource("1_u28kc")
-text = "Start"
-
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 24.0
+offset_bottom = 36.0
 grow_horizontal = 2
 theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 10
 
-[node name="Timer" type="Label" parent="MarginContainer"]
+[node name="Time" type="Label" parent="MarginContainer"]
 layout_mode = 2
 text = "30"
 label_settings = SubResource("LabelSettings_ua5rc")
@@ -59,3 +45,29 @@ text = "0"
 label_settings = SubResource("LabelSettings_ua5rc")
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -44.0
+offset_top = -75.0
+offset_right = 44.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="StartButton" type="Button" parent="MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("1_u28kc")
+text = "Start"
+
+[node name="ExitButton" type="Button" parent="MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("1_u28kc")
+text = "Exit"
