@@ -1,16 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://ug5db5l20270"]
+[gd_scene load_steps=4 format=3 uid="uid://ug5db5l20270"]
 
 [ext_resource type="FontFile" uid="uid://cdk60bgpnj0tr" path="res://assets/Kenney Bold.ttf" id="1_u28kc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_df3v8"]
 font = ExtResource("1_u28kc")
-font_size = 30
+font_size = 37
 
-[sub_resource type="LabelSettings" id="LabelSettings_ieyux"]
-font = ExtResource("1_u28kc")
-font_size = 24
-
-[sub_resource type="LabelSettings" id="LabelSettings_tcfuw"]
+[sub_resource type="LabelSettings" id="LabelSettings_ua5rc"]
 font = ExtResource("1_u28kc")
 font_size = 24
 
@@ -29,33 +25,37 @@ text = "Coin Dash!"
 label_settings = SubResource("LabelSettings_df3v8")
 horizontal_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-anchors_preset = 10
-anchor_right = 1.0
-grow_horizontal = 2
-size_flags_vertical = 0
-
-[node name="Timer" type="Label" parent="MarginContainer"]
-layout_mode = 2
-text = "0"
-label_settings = SubResource("LabelSettings_ieyux")
-
-[node name="Score" type="Label" parent="MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 8
-text = "0"
-label_settings = SubResource("LabelSettings_tcfuw")
-
 [node name="Button" type="Button" parent="."]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -4.0
-offset_top = -8.0
-offset_right = 4.0
+offset_left = -44.0
+offset_top = -32.0
+offset_right = 44.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("1_u28kc")
 text = "Start"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 24.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 5
+
+[node name="Timer" type="Label" parent="MarginContainer"]
+layout_mode = 2
+text = "30"
+label_settings = SubResource("LabelSettings_ua5rc")
+vertical_alignment = 1
+
+[node name="Score" type="Label" parent="MarginContainer"]
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_ua5rc")
+horizontal_alignment = 2
+vertical_alignment = 1
