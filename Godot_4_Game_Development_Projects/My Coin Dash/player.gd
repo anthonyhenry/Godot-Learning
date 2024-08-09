@@ -1,7 +1,8 @@
 extends Area2D
 
-var direction = Vector2.ZERO
+var velocity = Vector2.ZERO
 var speed = 350
+var screensize = Vector2(480, 720)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -10,24 +11,27 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	# Set direction and animation based on input
+	# Set velocity and animation based on input
 	if Input.is_action_pressed("ui_right"):
-		direction = Vector2(1, 0)
+		velocity = Vector2(1, 0)
 		$AnimatedSprite2D.animation = "run"
 		$AnimatedSprite2D.flip_h = false
 	elif Input.is_action_pressed("ui_left"):
-		direction = Vector2(-1, 0)
+		velocity = Vector2(-1, 0)
 		$AnimatedSprite2D.animation = "run"
 		$AnimatedSprite2D.flip_h = true
 	elif Input.is_action_pressed("ui_up"):
-		direction = Vector2(0, -1)
+		velocity = Vector2(0, -1)
 		$AnimatedSprite2D.animation = "run"
 	elif Input.is_action_pressed("ui_down"):
-		direction = Vector2(0, 1)
+		velocity = Vector2(0, 1)
 		$AnimatedSprite2D.animation = "run"
 	else:
-		direction = Vector2.ZERO
+		velocity = Vector2.ZERO
 		$AnimatedSprite2D.animation = "idle"
 	
 	# Set position
-	position += direction * speed * delta
+	position += velocity * speed * delta
+	
+	position.x = clamp(position.x, 0, screensize.x)
+	position.y = clamp(position.y, 0, screensize.y)
