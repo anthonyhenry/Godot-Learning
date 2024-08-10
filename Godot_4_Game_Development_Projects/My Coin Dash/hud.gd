@@ -8,18 +8,24 @@ func update_timer(time):
 func update_score(score):
 	$Text/Score.text = str(score)
 	
-func showText(messageText):
+func set_start_button_text(text):
+	$Buttons/StartButton.text = text
+	
+func show_text(messageText):
 	$Buttons/StartButton.show()
 	$Buttons/ExitButton.show()
 	$CenterText.text = messageText
 	$CenterText.show()
 
 func _on_start_button_pressed():
-	$Buttons/StartButton.hide()
-	$Buttons/ExitButton.hide()
-	$CenterText.hide()
-	emit_signal("play_game")
+	hud_unpause()
 
 # Quit game if exit button is pressed
 func _on_exit_button_pressed():
 	get_tree().quit()
+
+func hud_unpause():
+	$Buttons/StartButton.hide()
+	$Buttons/ExitButton.hide()
+	$CenterText.hide()
+	emit_signal("play_game")
