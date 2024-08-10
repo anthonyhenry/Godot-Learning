@@ -2,12 +2,15 @@ extends Area2D
 
 var velocity = Vector2.ZERO
 var speed = 350
-var screensize = Vector2(480, 720)
+var screensize = Vector2.ZERO
 var paused = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	screensize = get_viewport().get_visible_rect().size
+	print_debug(get_parent())
+	if get_parent().get_name() == "Main":
+		print_debug("Good")
 
 func pause():
 	$AnimatedSprite2D.pause()
