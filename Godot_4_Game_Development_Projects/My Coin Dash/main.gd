@@ -24,7 +24,6 @@ func _on_hud_play_game():
 		# Spawn the player in the middle of the screen
 		var spawnPlayer = playerScene.instantiate()
 		add_child(spawnPlayer)
-		spawnPlayer.screensize = screensize
 		spawnPlayer.position = Vector2(screensize.x/2, screensize.y/2)
 
 		# Set gameStarted to true
