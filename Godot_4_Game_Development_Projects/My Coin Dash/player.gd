@@ -13,11 +13,11 @@ func _ready():
 		print_debug("Good")
 
 func pause():
-	$AnimatedSprite2D.pause()
+	#$AnimatedSprite2D.pause()
 	paused = true
 
 func unpause():
-	$AnimatedSprite2D.play()
+	#$AnimatedSprite2D.play()
 	paused = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

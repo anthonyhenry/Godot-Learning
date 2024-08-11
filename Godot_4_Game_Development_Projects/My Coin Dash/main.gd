@@ -1,11 +1,13 @@
 extends Node
 
+var level = 1
 var timeRemaining = 30
 var score = 0
 var gamePaused = true
 var gameStarted = false
 var screensize = Vector2.ZERO
 @export var playerScene : PackedScene
+@export var coinScene : PackedScene
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -21,6 +23,7 @@ func _process(delta):
 func _on_hud_play_game():
 	# Check if game has already started
 	if !gameStarted:
+		setupGame()
 		# Spawn the player in the middle of the screen
 		var spawnPlayer = playerScene.instantiate()
 		add_child(spawnPlayer)
@@ -38,10 +41,17 @@ func _input(event):
 	if event.is_action_pressed("pause"):
 		# Pause game
 		if !gamePaused:
-			$HUD.show_text("Paused")
 			gamePaused = true
-			$Player.pause()
+			# Show HUD
+			$HUD.show_text("Paused")
 			$HUD.set_start_button_text("Resume")
+			# Stop Player from processing input
+			$Player.pause()
+			# Pause all sprite animations
+			for child in get_children():
+				if child.get_node_or_null("AnimatedSprite2D") != null:
+					child.get_node("AnimatedSprite2D").pause()
+			
 		# Game already paused
 		else:
 			# Exit game if not already started
@@ -49,9 +59,22 @@ func _input(event):
 				get_tree().quit()
 			# Run the same code from clicking start button
 			else:
+				# Hide Hud
 				$HUD.hud_unpause()
+				# Play all sprite animations
+				for child in get_children():
+					if child.get_node_or_null("AnimatedSprite2D") != null:
+						child.get_node("AnimatedSprite2D").play()
 
 func _on_game_timer_timeout():
 	if !gamePaused and timeRemaining > 0:
 		timeRemaining -= 1
 		$HUD.update_timer(timeRemaining)
+		
+func setupGame():
+	var coinCount = 0
+	while coinCount < level + 4:
+		var spawnCoin = coinScene.instantiate()
+		add_child(spawnCoin)
+		spawnCoin.position = Vector2(randi_range(0, screensize.x), randi_range(0, screensize.y))
+		coinCount += 1
