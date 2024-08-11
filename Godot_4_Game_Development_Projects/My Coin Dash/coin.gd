@@ -1,16 +1,36 @@
 extends Area2D
 
+var animationInProgress = false
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	#$AnimatedSprite2D.speed_scale = 12
-	#print_debug(test)
-	pass # Replace with function body.
+	# Have each animation start at a random time 1-8 seconds after spawn
+	$Timer.start(randi_range(1, 8))
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
-	#var test = $AnimatedSprite2D.is_playing()
-	#print_debug(test)
-	#if get_parent().get_name() == "Main" && get_parent().gamePaused:
+
+# Play animation on timeout
+func _on_timer_timeout():
+	$AnimatedSprite2D.play()
+	animationInProgress = true
+
+# Reset timer when animation has finished
+func _on_animated_sprite_2d_animation_finished():
+	$Timer.start(randi_range(1, 8))
+	animationInProgress = false
+
+func pause():
+	# Pause animation if playing
+	if animationInProgress:
+		$AnimatedSprite2D.pause()
+	# Pause timer otherwise
+	else:
+		$Timer.paused = true
+
+func unpause():
+	# Resume animation if it was started
+	if animationInProgress:
+		$AnimatedSprite2D.play()
+	# Unpause timer otherwise
+	else:
+		$Timer.paused = false

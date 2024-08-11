@@ -9,32 +9,33 @@ var screensize = Vector2.ZERO
 @export var playerScene : PackedScene
 @export var coinScene : PackedScene
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	$HUD.update_timer(timeRemaining)
 	$HUD.update_score(score)
 	screensize = get_viewport().get_visible_rect().size
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
 
 # HUD start button pressed
 func _on_hud_play_game():
-	# Check if game has already started
+	# Check if hasn't started yet
 	if !gameStarted:
+		# Spawn coins
 		setupGame()
 		# Spawn the player in the middle of the screen
 		var spawnPlayer = playerScene.instantiate()
 		add_child(spawnPlayer)
 		spawnPlayer.position = Vector2(screensize.x/2, screensize.y/2)
-
 		# Set gameStarted to true
 		gameStarted = true
+	
 	
 	gamePaused = false
 	$Player.unpause()
 	$GameTimer.start()
+	for coin in get_tree().get_nodes_in_group("coins"):
+		coin.unpause()
 	
 func _input(event):
 	# Escape key hit
@@ -45,13 +46,11 @@ func _input(event):
 			# Show HUD
 			$HUD.show_text("Paused")
 			$HUD.set_start_button_text("Resume")
-			# Stop Player from processing input
+			# Stop player animation and input
 			$Player.pause()
-			# Pause all sprite animations
-			for child in get_children():
-				if child.get_node_or_null("AnimatedSprite2D") != null:
-					child.get_node("AnimatedSprite2D").pause()
-			
+			# Pause coins
+			for coin in get_tree().get_nodes_in_group("coins"):
+				coin.pause()
 		# Game already paused
 		else:
 			# Exit game if not already started
@@ -62,9 +61,9 @@ func _input(event):
 				# Hide Hud
 				$HUD.hud_unpause()
 				# Play all sprite animations
-				for child in get_children():
-					if child.get_node_or_null("AnimatedSprite2D") != null:
-						child.get_node("AnimatedSprite2D").play()
+				#for child in get_children():
+					#if child.get_node_or_null("AnimatedSprite2D") != null:
+						#child.get_node("AnimatedSprite2D").play()
 
 func _on_game_timer_timeout():
 	if !gamePaused and timeRemaining > 0:
