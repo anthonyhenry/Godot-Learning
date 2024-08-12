@@ -17,7 +17,7 @@ func _ready():
 func _process(delta):
 	pass
 
-# HUD start button pressed
+# Game unpaused
 func _on_hud_play_game():
 	# Check if hasn't started yet
 	if !gameStarted:
@@ -27,13 +27,14 @@ func _on_hud_play_game():
 		var spawnPlayer = playerScene.instantiate()
 		add_child(spawnPlayer)
 		spawnPlayer.position = Vector2(screensize.x/2, screensize.y/2)
+		# Start timer
+		$GameTimer.start()
 		# Set gameStarted to true
 		gameStarted = true
 	
-	
 	gamePaused = false
 	$Player.unpause()
-	$GameTimer.start()
+	$GameTimer.paused = false
 	for coin in get_tree().get_nodes_in_group("coins"):
 		coin.unpause()
 	
@@ -43,6 +44,8 @@ func _input(event):
 		# Pause game
 		if !gamePaused:
 			gamePaused = true
+			# Pause timer
+			$GameTimer.paused = true 
 			# Show HUD
 			$HUD.show_text("Paused")
 			$HUD.set_start_button_text("Resume")
@@ -58,12 +61,8 @@ func _input(event):
 				get_tree().quit()
 			# Run the same code from clicking start button
 			else:
-				# Hide Hud
+				# Unpause HUD
 				$HUD.hud_unpause()
-				# Play all sprite animations
-				#for child in get_children():
-					#if child.get_node_or_null("AnimatedSprite2D") != null:
-						#child.get_node("AnimatedSprite2D").play()
 
 func _on_game_timer_timeout():
 	if !gamePaused and timeRemaining > 0:
