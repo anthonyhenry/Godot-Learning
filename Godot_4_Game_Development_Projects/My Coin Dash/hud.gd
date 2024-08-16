@@ -33,3 +33,10 @@ func hud_unpause():
 
 func _on_ready():
 	set_start_button_text("Start")
+	
+func showLevel(levelText):
+	$LevelText.text = levelText
+	$LevelText.show()
+	
+func hideLevel():
+	$LevelText.hide()

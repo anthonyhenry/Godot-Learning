@@ -61,6 +61,7 @@ func _input(event):
 			# Pause timer
 			$GameTimer.paused = true 
 			# Show HUD
+			$HUD.hideLevel()
 			$HUD.show_text("Paused")
 			$HUD.set_start_button_text("Resume")
 			# Stop player animation and input
@@ -100,6 +101,9 @@ func _on_game_timer_timeout():
 		gameStarted = false
 		
 func spawnCoins():
+	#var levelText = "Level " + level
+	$HUD.showLevel("Level " + str(level))
+	$LevelTextTimer.start()
 	while coinCount < level + 4:
 		var spawnCoin = coinScene.instantiate()
 		#add_child(spawnCoin)
@@ -131,3 +135,8 @@ func _on_game_over_timer_timeout():
 	# Delete coins
 	for coin in get_tree().get_nodes_in_group("coins"):
 		coin.queue_free()
+
+
+func _on_level_text_timer_timeout():
+	$HUD.hideLevel()
+	pass # Replace with function body.

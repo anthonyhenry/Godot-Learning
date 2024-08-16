@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://ug5db5l20270"]
+[gd_scene load_steps=6 format=3 uid="uid://ug5db5l20270"]
 
 [ext_resource type="Script" path="res://hud.gd" id="1_b6d55"]
 [ext_resource type="FontFile" uid="uid://cdk60bgpnj0tr" path="res://assets/Kenney Bold.ttf" id="1_u28kc"]
@@ -6,6 +6,12 @@
 [sub_resource type="LabelSettings" id="LabelSettings_df3v8"]
 font = ExtResource("1_u28kc")
 font_size = 37
+
+[sub_resource type="LabelSettings" id="LabelSettings_5rdi1"]
+font = ExtResource("1_u28kc")
+font_size = 37
+font_color = Color(1, 1, 1, 0)
+outline_size = 5
 
 [sub_resource type="LabelSettings" id="LabelSettings_ua5rc"]
 font = ExtResource("1_u28kc")
@@ -25,6 +31,23 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Coin Dash!"
 label_settings = SubResource("LabelSettings_df3v8")
+horizontal_alignment = 1
+
+[node name="LevelText" type="Label" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -153.0
+offset_top = -28.5
+offset_right = 153.0
+offset_bottom = 28.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Level"
+label_settings = SubResource("LabelSettings_5rdi1")
 horizontal_alignment = 1
 
 [node name="Text" type="MarginContainer" parent="."]
