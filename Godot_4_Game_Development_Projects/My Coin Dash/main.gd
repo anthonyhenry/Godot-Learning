@@ -102,7 +102,8 @@ func _on_game_timer_timeout():
 func spawnCoins():
 	while coinCount < level + 4:
 		var spawnCoin = coinScene.instantiate()
-		add_child(spawnCoin)
+		#add_child(spawnCoin)
+		call_deferred("add_child", spawnCoin)
 		spawnCoin.position = Vector2(randi_range(0, screensize.x), randi_range(0, screensize.y))
 		coinCount += 1
 
