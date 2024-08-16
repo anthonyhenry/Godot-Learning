@@ -9,11 +9,11 @@ func update_score(score):
 	$Text/Score.text = str(score)
 	
 func set_start_button_text(text):
+	$Buttons/StartButton.show()
+	$Buttons/ExitButton.show()
 	$Buttons/StartButton.text = text
 	
 func show_text(messageText):
-	$Buttons/StartButton.show()
-	$Buttons/ExitButton.show()
 	$CenterText.text = messageText
 	$CenterText.show()
 
@@ -29,3 +29,7 @@ func hud_unpause():
 	$Buttons/ExitButton.hide()
 	$CenterText.hide()
 	emit_signal("play_game")
+
+
+func _on_ready():
+	set_start_button_text("Start")

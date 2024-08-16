@@ -8,9 +8,6 @@ var paused = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	screensize = get_viewport().get_visible_rect().size
-	print_debug(get_parent())
-	if get_parent().get_name() == "Main":
-		print_debug("Good")
 
 func pause():
 	$AnimatedSprite2D.pause()
@@ -58,3 +55,7 @@ func _on_area_entered(area):
 		if get_parent().get_name() == "Main":
 			get_parent().player_touched_coin()
 		area.queue_free()
+
+func gameOver():
+	paused = true
+	$AnimatedSprite2D.animation = "hurt"

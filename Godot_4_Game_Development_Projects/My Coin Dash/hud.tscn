@@ -66,7 +66,6 @@ size_flags_vertical = 8
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_fonts/font = ExtResource("1_u28kc")
-text = "Start"
 
 [node name="ExitButton" type="Button" parent="Buttons"]
 layout_mode = 2
@@ -75,5 +74,6 @@ theme_override_fonts/font = ExtResource("1_u28kc")
 text = "Exit"
 
 [connection signal="play_game" from="." to="." method="_on_play_game"]
+[connection signal="ready" from="." to="." method="_on_ready"]
 [connection signal="pressed" from="Buttons/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="Buttons/ExitButton" to="." method="_on_exit_button_pressed"]

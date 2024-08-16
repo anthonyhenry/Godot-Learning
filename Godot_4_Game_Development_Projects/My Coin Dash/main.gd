@@ -1,9 +1,14 @@
 extends Node
 
-var level = 1
-var timeRemaining = 30
-var score = 0
-var coinCount = 0
+const INITIAL_TIME_REMAINING = 13
+const INITIAL_LEVEL = 1
+const INITIAL_SCORE = 0
+const INITIAL_COIN_COUNT = 0
+
+var level = INITIAL_LEVEL
+var timeRemaining = INITIAL_TIME_REMAINING
+var score = INITIAL_SCORE
+var coinCount = INITIAL_COIN_COUNT
 var gamePaused = true
 var gameStarted = false
 var screensize = Vector2.ZERO
@@ -20,10 +25,18 @@ func _process(delta):
 
 # Game unpaused
 func _on_hud_play_game():
-	# Check if hasn't started yet
+	# Game hasn't started yet
 	if !gameStarted:
+		# Reset game variables
+		level = INITIAL_LEVEL
+		timeRemaining = INITIAL_TIME_REMAINING
+		score = INITIAL_SCORE
+		coinCount = INITIAL_COIN_COUNT
+		# Reset HUD
+		$HUD.update_timer(timeRemaining)
+		$HUD.update_score(score)
 		# Spawn coins
-		setupGame()
+		spawnCoins()
 		# Spawn the player in the middle of the screen
 		var spawnPlayer = playerScene.instantiate()
 		add_child(spawnPlayer)
@@ -55,6 +68,7 @@ func _input(event):
 			# Pause coins
 			for coin in get_tree().get_nodes_in_group("coins"):
 				coin.pause()
+
 		# Game already paused
 		else:
 			# Exit game if not already started
@@ -66,11 +80,26 @@ func _input(event):
 				$HUD.hud_unpause()
 
 func _on_game_timer_timeout():
-	if !gamePaused and timeRemaining > 0:
+	if !gamePaused:
 		timeRemaining -= 1
 		$HUD.update_timer(timeRemaining)
 		
-func setupGame():
+	# Game over
+	if timeRemaining == 0:
+		# Play game over sfx
+		$GameOverSFX.play()
+		# Stop the timer from infinitely ticking
+		$GameTimer.paused = true
+		# Run player game over function (sets hurt animation)
+		$Player.gameOver()
+		# Show game over text
+		$HUD.show_text("Game Over")
+		# Start game over timer
+		$GameOverTimer.start()
+		gamePaused = true
+		gameStarted = false
+		
+func spawnCoins():
 	while coinCount < level + 4:
 		var spawnCoin = coinScene.instantiate()
 		add_child(spawnCoin)
@@ -78,6 +107,11 @@ func setupGame():
 		coinCount += 1
 
 func player_touched_coin():
+	# Play coin sfx
+	$CoinPickupSFX.play()
+	# Increment score
+	score += 1
+	$HUD.update_score(score)
 	# Decrement coin count
 	coinCount -= 1
 	# Start new level if all coins have been collected
@@ -85,4 +119,14 @@ func player_touched_coin():
 		level += 1
 		timeRemaining += 5
 		$HUD.update_timer(timeRemaining)
-		setupGame()
+		spawnCoins()
+
+
+func _on_game_over_timer_timeout():
+	# Set start button to say retry
+	$HUD.set_start_button_text("Retry")
+	# Delete player
+	$Player.queue_free()
+	# Delete coins
+	for coin in get_tree().get_nodes_in_group("coins"):
+		coin.queue_free()
