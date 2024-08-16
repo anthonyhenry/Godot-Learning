@@ -49,3 +49,12 @@ func _process(delta):
 	# Prevent player from going off screen
 	position.x = clamp(position.x, 0, screensize.x)
 	position.y = clamp(position.y, 0, screensize.y)
+
+
+func _on_area_entered(area):
+	# Check for collision with coins
+	if area.is_in_group("coins"):
+		# Run the player touched coin function in Main
+		if get_parent().get_name() == "Main":
+			get_parent().player_touched_coin()
+		area.queue_free()

@@ -3,6 +3,7 @@ extends Node
 var level = 1
 var timeRemaining = 30
 var score = 0
+var coinCount = 0
 var gamePaused = true
 var gameStarted = false
 var screensize = Vector2.ZERO
@@ -70,9 +71,18 @@ func _on_game_timer_timeout():
 		$HUD.update_timer(timeRemaining)
 		
 func setupGame():
-	var coinCount = 0
 	while coinCount < level + 4:
 		var spawnCoin = coinScene.instantiate()
 		add_child(spawnCoin)
 		spawnCoin.position = Vector2(randi_range(0, screensize.x), randi_range(0, screensize.y))
 		coinCount += 1
+
+func player_touched_coin():
+	# Decrement coin count
+	coinCount -= 1
+	# Start new level if all coins have been collected
+	if coinCount == 0:
+		level += 1
+		timeRemaining += 5
+		$HUD.update_timer(timeRemaining)
+		setupGame()
