@@ -1,7 +1,9 @@
 extends Area2D
 
+const STANDARD_PLAYER_SPEED = 350
+const BOOSTED_PLAYER_SPEED = STANDARD_PLAYER_SPEED + 100
 var velocity = Vector2.ZERO
-var speed = 350
+var speed = STANDARD_PLAYER_SPEED
 var screensize = Vector2.ZERO
 var paused = false
 
@@ -19,6 +21,8 @@ func unpause():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	print_debug(speed)
+	print_debug($AnimatedSprite2D.speed_scale)
 	if !paused:
 		# Set velocity and animation based on input
 		if Input.is_action_pressed("ui_right"):
@@ -55,7 +59,18 @@ func _on_area_entered(area):
 		if get_parent().get_name() == "Main":
 			get_parent().player_touched_coin()
 		area.pickup()
+	if area.is_in_group("powerups"):
+		# Increase player speed when a power-up is collected
+		speed = BOOSTED_PLAYER_SPEED
+		$AnimatedSprite2D.speed_scale = 2
+		$SpeedBoostTimer.start()
 
 func gameOver():
 	paused = true
 	$AnimatedSprite2D.animation = "hurt"
+
+
+func _on_speed_boost_timer_timeout():
+	# Reset speed
+	speed = STANDARD_PLAYER_SPEED
+	$AnimatedSprite2D.speed_scale = 1
