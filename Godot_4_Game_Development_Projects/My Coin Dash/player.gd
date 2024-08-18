@@ -54,7 +54,7 @@ func _on_area_entered(area):
 		# Run the player touched coin function in Main
 		if get_parent().get_name() == "Main":
 			get_parent().player_touched_coin()
-		area.queue_free()
+		area.pickup()
 
 func gameOver():
 	paused = true

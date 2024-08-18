@@ -34,3 +34,11 @@ func unpause():
 	# Unpause timer otherwise
 	else:
 		$Timer.paused = false
+
+func pickup():
+	$CollisionShape2D.set_deferred("disabled", true)
+	var coinTween = create_tween().set_parallel().set_trans(Tween.TRANS_QUAD)
+	coinTween.tween_property(self, "scale", scale * 3, 0.3)
+	coinTween.tween_property(self, "modulate:a", 0.0, 0.3)
+	await coinTween.finished
+	queue_free()
