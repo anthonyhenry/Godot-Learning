@@ -13,6 +13,7 @@
 script = ExtResource("1_medd8")
 playerScene = ExtResource("2_h76au")
 coinScene = ExtResource("5_7oxh5")
+powerupScene = ExtResource("8_lbxg6")
 
 [node name="Background" type="TextureRect" parent="."]
 anchors_preset = 15
@@ -40,10 +41,12 @@ one_shot = true
 [node name="LevelTextTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="Powerup" parent="." instance=ExtResource("8_lbxg6")]
-position = Vector2(75, 237)
+[node name="PowerupSpawnTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
 
 [connection signal="play_game" from="HUD" to="." method="_on_hud_play_game"]
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
 [connection signal="timeout" from="GameOverTimer" to="." method="_on_game_over_timer_timeout"]
 [connection signal="timeout" from="LevelTextTimer" to="." method="_on_level_text_timer_timeout"]
+[connection signal="timeout" from="PowerupSpawnTimer" to="." method="_on_powerup_spawn_timer_timeout"]

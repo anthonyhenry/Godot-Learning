@@ -88,6 +88,7 @@ position = Vector2(-3, 10)
 shape = SubResource("RectangleShape2D_0at2j")
 
 [node name="SpeedBoostTimer" type="Timer" parent="."]
+wait_time = 3.0
 one_shot = true
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

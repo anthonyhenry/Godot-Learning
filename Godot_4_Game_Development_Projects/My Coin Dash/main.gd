@@ -1,6 +1,6 @@
 extends Node
 
-const INITIAL_TIME_REMAINING = 13
+const INITIAL_TIME_REMAINING = 30
 const INITIAL_LEVEL = 1
 const INITIAL_SCORE = 0
 const INITIAL_COIN_COUNT = 0
@@ -14,6 +14,7 @@ var gameStarted = false
 var screensize = Vector2.ZERO
 @export var playerScene : PackedScene
 @export var coinScene : PackedScene
+@export var powerupScene : PackedScene
 
 func _ready():
 	$HUD.update_timer(timeRemaining)
@@ -91,6 +92,8 @@ func _on_game_timer_timeout():
 		$GameOverSFX.play()
 		# Stop the timer from infinitely ticking
 		$GameTimer.paused = true
+		# Stop powerup from spawning
+		$PowerupSpawnTimer.paused = true
 		# Run player game over function (sets hurt animation)
 		$Player.gameOver()
 		# Show game over text
@@ -140,3 +143,9 @@ func _on_game_over_timer_timeout():
 func _on_level_text_timer_timeout():
 	$HUD.hideLevel()
 	pass # Replace with function body.
+
+
+func _on_powerup_spawn_timer_timeout():
+	var powerupSpawn = powerupScene.instantiate()
+	add_child(powerupSpawn)
+	powerupSpawn.position = Vector2(randi_range(0, screensize.x), randi_range(0, screensize.y))

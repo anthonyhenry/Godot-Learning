@@ -21,8 +21,8 @@ func unpause():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	print_debug(speed)
-	print_debug($AnimatedSprite2D.speed_scale)
+	#print_debug(speed)
+	#print_debug($AnimatedSprite2D.speed_scale)
 	if !paused:
 		# Set velocity and animation based on input
 		if Input.is_action_pressed("ui_right"):
@@ -64,6 +64,7 @@ func _on_area_entered(area):
 		speed = BOOSTED_PLAYER_SPEED
 		$AnimatedSprite2D.speed_scale = 2
 		$SpeedBoostTimer.start()
+		area.playerPickup()
 
 func gameOver():
 	paused = true
