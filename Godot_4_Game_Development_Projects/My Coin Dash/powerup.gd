@@ -12,6 +12,9 @@ func playerPickup():
 
 # Delete after timer
 func _on_timer_timeout():
+	despawn()
+
+func despawn():
 	var puDespawnTween = create_tween().set_parallel().set_trans(Tween.TRANS_QUAD)
 	puDespawnTween.tween_property(self, "scale", scale / 3, 0.3)
 	puDespawnTween.tween_property(self, "modulate:a", 0.0, 0.3)

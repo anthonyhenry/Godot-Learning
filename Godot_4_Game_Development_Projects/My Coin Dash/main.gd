@@ -98,6 +98,7 @@ func _on_game_timer_timeout():
 		$Player.gameOver()
 		# Show game over text
 		$HUD.show_text("Game Over")
+		
 		# Start game over timer
 		$GameOverTimer.start()
 		gamePaused = true
@@ -135,10 +136,12 @@ func _on_game_over_timer_timeout():
 	$HUD.set_start_button_text("Retry")
 	# Delete player
 	$Player.queue_free()
-	# Delete coins
+	# Despawn coins
 	for coin in get_tree().get_nodes_in_group("coins"):
-		coin.queue_free()
-
+		coin.despawn()
+	# Despawn power-up
+	if get_node_or_null("Powerup") != null:
+		get_node("Powerup").despawn()
 
 func _on_level_text_timer_timeout():
 	$HUD.hideLevel()

@@ -42,3 +42,10 @@ func pickup():
 	coinTween.tween_property(self, "modulate:a", 0.0, 0.3)
 	await coinTween.finished
 	queue_free()
+
+func despawn():
+	var despawnTween = create_tween().set_parallel().set_trans(Tween.TRANS_QUAD)
+	despawnTween.tween_property(self, "scale", scale / 3, 0.3)
+	despawnTween.tween_property(self, "modulate:a", 0.0, 0.3)
+	await despawnTween.finished
+	queue_free()
