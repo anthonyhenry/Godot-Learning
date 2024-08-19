@@ -36,6 +36,7 @@ func unpause():
 		$Timer.paused = false
 
 func pickup():
+	$Pickup.play()
 	$CollisionShape2D.set_deferred("disabled", true)
 	var coinTween = create_tween().set_parallel().set_trans(Tween.TRANS_QUAD)
 	coinTween.tween_property(self, "scale", scale * 3, 0.3)

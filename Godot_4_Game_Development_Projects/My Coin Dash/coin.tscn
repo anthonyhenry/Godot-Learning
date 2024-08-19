@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://8651iytae2gb"]
+[gd_scene load_steps=16 format=3 uid="uid://8651iytae2gb"]
 
 [ext_resource type="Script" path="res://coin.gd" id="1_7ia1e"]
 [ext_resource type="Texture2D" uid="uid://da376e1pik8cp" path="res://assets/coin/coin-frame-1.png" id="1_fvgco"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://ca7aui21dn5fd" path="res://assets/coin/coin-frame-9.png" id="9_5f4o6"]
 [ext_resource type="Texture2D" uid="uid://nksxb83fsumt" path="res://assets/coin/coin-frame-10.png" id="10_gb48f"]
 [ext_resource type="Texture2D" uid="uid://bsbnuamnoxbdt" path="res://assets/coin/coin-frame-11.png" id="11_anqep"]
+[ext_resource type="AudioStream" uid="uid://keg1o25vi71w" path="res://assets/audio/Coin.wav" id="13_7426j"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5dj2j"]
 animations = [{
@@ -69,6 +70,9 @@ shape = SubResource("CircleShape2D_pemct")
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="Pickup" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_7426j")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

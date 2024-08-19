@@ -123,9 +123,8 @@ func spawnCoins():
 		spawnCoin.position = Vector2(randi_range(0, screensize.x), randi_range(0, screensize.y))
 		coinCount += 1
 
-func player_touched_coin():
-	# Play coin sfx
-	$CoinPickupSFX.play()
+func player_touched_coin(coin):
+	coin.pickup()
 	# Increment score
 	score += 1
 	$HUD.update_score(score)

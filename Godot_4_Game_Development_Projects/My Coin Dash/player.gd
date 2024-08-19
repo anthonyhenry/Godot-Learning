@@ -57,8 +57,7 @@ func _on_area_entered(area):
 	if area.is_in_group("coins"):
 		# Run the player touched coin function in Main
 		if get_parent().get_name() == "Main":
-			get_parent().player_touched_coin()
-		area.pickup()
+			get_parent().player_touched_coin(area)
 	if area.is_in_group("powerups"):
 		# Increase player speed when a power-up is collected
 		speed = BOOSTED_PLAYER_SPEED
