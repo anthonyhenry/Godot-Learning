@@ -12,6 +12,7 @@ var coinCount = INITIAL_COIN_COUNT
 var gamePaused = true
 var gameStarted = false
 var screensize = Vector2.ZERO
+
 @export var playerScene : PackedScene
 @export var coinScene : PackedScene
 @export var powerupScene : PackedScene
@@ -52,6 +53,9 @@ func _on_hud_play_game():
 	$GameTimer.paused = false
 	for coin in get_tree().get_nodes_in_group("coins"):
 		coin.unpause()
+	if get_node_or_null("Powerup") != null:
+		get_node("Powerup").unpause()
+	$PowerupSpawnTimer.paused = false
 	
 func _input(event):
 	# Escape key hit
@@ -70,6 +74,10 @@ func _input(event):
 			# Pause coins
 			for coin in get_tree().get_nodes_in_group("coins"):
 				coin.pause()
+			# Pause powerup
+			if get_node_or_null("Powerup") != null:
+				get_node("Powerup").pause()
+			$PowerupSpawnTimer.paused = true
 
 		# Game already paused
 		else:
