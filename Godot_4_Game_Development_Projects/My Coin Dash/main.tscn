@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://m7a5mxtoeswn"]
+[gd_scene load_steps=8 format=3 uid="uid://m7a5mxtoeswn"]
 
 [ext_resource type="PackedScene" uid="uid://ug5db5l20270" path="res://hud.tscn" id="1_7v1a1"]
 [ext_resource type="Script" path="res://main.gd" id="1_medd8"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://b5a88353fnkr8" path="res://player.tscn" id="2_h76au"]
 [ext_resource type="PackedScene" uid="uid://8651iytae2gb" path="res://coin.tscn" id="5_7oxh5"]
 [ext_resource type="AudioStream" uid="uid://dmyblotvgdbns" path="res://assets/audio/EndSound.wav" id="6_jy66m"]
-[ext_resource type="AudioStream" uid="uid://keg1o25vi71w" path="res://assets/audio/Coin.wav" id="6_swiwa"]
 [ext_resource type="PackedScene" uid="uid://cqw1u6ophag2f" path="res://powerup.tscn" id="8_lbxg6"]
 
 [node name="Main" type="Node"]
@@ -27,9 +26,6 @@ stretch_mode = 1
 [node name="HUD" parent="." instance=ExtResource("1_7v1a1")]
 
 [node name="GameTimer" type="Timer" parent="."]
-
-[node name="CoinPickupSFX" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_swiwa")
 
 [node name="GameOverSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_jy66m")
