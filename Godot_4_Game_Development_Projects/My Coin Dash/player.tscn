@@ -73,7 +73,6 @@ size = Vector2(34, 44)
 
 [node name="Player" type="Area2D"]
 script = ExtResource("1_fq7ga")
-metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 2)
@@ -82,9 +81,10 @@ animation = &"run"
 autoplay = "idle"
 frame = 5
 frame_progress = 0.16322
+offset = Vector2(0, -5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-3, 10)
+position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_0at2j")
 
 [node name="SpeedBoostTimer" type="Timer" parent="."]

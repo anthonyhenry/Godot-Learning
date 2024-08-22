@@ -16,11 +16,18 @@ var screensize = Vector2.ZERO
 @export var playerScene : PackedScene
 @export var coinScene : PackedScene
 @export var powerupScene : PackedScene
+@export var cactusScene : PackedScene
 
 func _ready():
 	$HUD.update_timer(timeRemaining)
 	$HUD.update_score(score)
 	screensize = get_viewport().get_visible_rect().size
+	print_debug(1 % 6)
+	print_debug(2 % 6)
+	print_debug(3 % 6)
+	print_debug(4 % 6)
+	print_debug(5 % 6)
+	print_debug(6 % 6)
 
 func _process(delta):
 	pass
@@ -37,12 +44,12 @@ func _on_hud_play_game():
 		# Reset HUD
 		$HUD.update_timer(timeRemaining)
 		$HUD.update_score(score)
-		# Spawn coins
-		spawnCoins()
 		# Spawn the player in the middle of the screen
 		var spawnPlayer = playerScene.instantiate()
 		add_child(spawnPlayer)
 		spawnPlayer.position = Vector2(screensize.x/2, screensize.y/2)
+		# Spawn coins
+		spawnCoins()
 		# Start timer
 		$GameTimer.start()
 		# Set gameStarted to true
@@ -113,9 +120,33 @@ func _on_game_timer_timeout():
 		gameStarted = false
 		
 func spawnCoins():
-	#var levelText = "Level " + level
 	$HUD.showLevel("Level " + str(level))
 	$LevelTextTimer.start()
+	
+	# Find out how many cacti to spawn
+	var cactusCountPattern = [0, 1, 2, 3, 2, 1]
+	var levelCactiCount = cactusCountPattern[(level - 1) % 6]
+	print_debug(levelCactiCount)
+	# Find out how many cacti are already in the level
+	var currentCactiCount = get_tree().get_nodes_in_group("obstacles")
+	
+	if currentCactiCount.size() != levelCactiCount:
+		if levelCactiCount > currentCactiCount.size():
+			# Spawn cactus
+			var spawnCactus = cactusScene.instantiate()
+			add_child(spawnCactus)
+			spawnCactus.position = Vector2(randi_range(0, screensize.x), randi_range(0, screensize.y))
+			# Move cactus if it is too close to the player
+			var player = get_node_or_null("Player") 
+			if player != null:
+				var distance = spawnCactus.position.distance_squared_to(player.position)
+				while(distance < 2600):
+					spawnCactus.position = Vector2(randi_range(0, screensize.x), randi_range(0, screensize.y))
+					distance = spawnCactus.position.distance_squared_to(player.position)
+				spawnCactus.showCactus()
+		else:
+			get_tree().get_first_node_in_group("obstacles").queue_free()
+	
 	while coinCount < level + 4:
 		var spawnCoin = coinScene.instantiate()
 		#add_child(spawnCoin)

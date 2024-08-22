@@ -64,6 +64,8 @@ func _on_area_entered(area):
 		$AnimatedSprite2D.speed_scale = 2
 		$SpeedBoostTimer.start()
 		area.playerPickup()
+	if area.is_in_group("obstacles"):
+		print_debug("Ouch!")
 
 func gameOver():
 	paused = true
