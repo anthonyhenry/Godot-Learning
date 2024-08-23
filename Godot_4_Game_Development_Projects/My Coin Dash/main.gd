@@ -130,8 +130,8 @@ func spawnCoins():
 			var cactusPlaced = false
 			# Spawn cactus
 			var spawnCactus = cactusScene.instantiate()
-			add_child(spawnCactus)
-			#call_deferred("add_child", spawnCactus)
+			#add_child(spawnCactus)
+			call_deferred("add_child", spawnCactus)
 			
 			while cactusPlaced == false:
 				# Spawn cactus in a random position
@@ -157,7 +157,7 @@ func spawnCoins():
 						continue
 				
 				cactusPlaced = true
-				spawnCactus.showCactus()
+				spawnCactus.call_deferred("showCactus")
 		# Need to remove cactus
 		else:
 			get_tree().get_first_node_in_group("obstacles").queue_free()
