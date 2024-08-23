@@ -22,14 +22,9 @@ func _ready():
 	$HUD.update_timer(timeRemaining)
 	$HUD.update_score(score)
 	screensize = get_viewport().get_visible_rect().size
-	print_debug(1 % 6)
-	print_debug(2 % 6)
-	print_debug(3 % 6)
-	print_debug(4 % 6)
-	print_debug(5 % 6)
-	print_debug(6 % 6)
-
+	
 func _process(delta):
+	get_tree().get_nodes_in_group("obstacles")
 	pass
 
 # Game unpaused
@@ -126,24 +121,44 @@ func spawnCoins():
 	# Find out how many cacti to spawn
 	var cactusCountPattern = [0, 1, 2, 3, 2, 1]
 	var levelCactiCount = cactusCountPattern[(level - 1) % 6]
-	print_debug(levelCactiCount)
 	# Find out how many cacti are already in the level
 	var currentCactiCount = get_tree().get_nodes_in_group("obstacles")
 	
 	if currentCactiCount.size() != levelCactiCount:
+		# Need to add cactus
 		if levelCactiCount > currentCactiCount.size():
+			var cactusPlaced = false
 			# Spawn cactus
 			var spawnCactus = cactusScene.instantiate()
 			add_child(spawnCactus)
-			spawnCactus.position = Vector2(randi_range(0, screensize.x), randi_range(0, screensize.y))
-			# Move cactus if it is too close to the player
-			var player = get_node_or_null("Player") 
-			if player != null:
-				var distance = spawnCactus.position.distance_squared_to(player.position)
-				while(distance < 2600):
-					spawnCactus.position = Vector2(randi_range(0, screensize.x), randi_range(0, screensize.y))
-					distance = spawnCactus.position.distance_squared_to(player.position)
+			#call_deferred("add_child", spawnCactus)
+			
+			while cactusPlaced == false:
+				# Spawn cactus in a random position
+				spawnCactus.position = Vector2(randi_range(0, screensize.x), randi_range(0, screensize.y))
+				
+				# Check if cactus is too close to the player
+				var player = get_node_or_null("Player")
+				if player != null:
+					var distanceToPlayer = spawnCactus.position.distance_squared_to(player.position)
+					# Loop again if too close
+					if distanceToPlayer < 2600:
+						continue
+				
+				# Check if cactus is too close to other cacti
+				if currentCactiCount.size() > 0:
+					var distanceToClosestCactus = null
+					for cacti in currentCactiCount:
+						var distanceToCactus = spawnCactus.position.distance_squared_to(cacti.position)
+						if distanceToClosestCactus == null || distanceToCactus < distanceToClosestCactus:
+							distanceToClosestCactus = distanceToCactus
+					# Loop again if too close
+					if distanceToClosestCactus < 2500:
+						continue
+				
+				cactusPlaced = true
 				spawnCactus.showCactus()
+		# Need to remove cactus
 		else:
 			get_tree().get_first_node_in_group("obstacles").queue_free()
 	

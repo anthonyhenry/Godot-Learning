@@ -4,15 +4,16 @@ extends Area2D
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Disable collision 
-	$CollisionShape2D.disabled = true
+	$CollisionShape2D.set_deferred("disabled", true)
 	# Set invisible
-	$Sprite2D.visible = false
+	visible = false
+	pass
 
 func showCactus():
 	# Enable collision 
-	$CollisionShape2D.disabled = false
+	$CollisionShape2D.set_deferred("disabled", false)
 	# Set visible
-	$Sprite2D.visible = true
+	visible = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
