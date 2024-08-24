@@ -47,6 +47,8 @@ func _on_hud_play_game():
 		spawnCoins()
 		# Start timer
 		$GameTimer.start()
+		# Start Power-up timer
+		$PowerupSpawnTimer.start()
 		# Set gameStarted to true
 		gameStarted = true
 	
