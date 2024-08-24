@@ -1,10 +1,12 @@
 extends Area2D
 
 var animationInProgress = false
+var screensize = Vector2.ZERO
 
 func _ready():
 	# Have each animation start at a random time 1-8 seconds after spawn
 	$Timer.start(randi_range(1, 8))
+	screensize = get_viewport().get_visible_rect().size
 
 func _process(delta):
 	pass
@@ -50,3 +52,9 @@ func despawn():
 	despawnTween.tween_property(self, "modulate:a", 0.0, 0.3)
 	await despawnTween.finished
 	queue_free()
+
+
+func _on_area_entered(area):
+	if area.is_in_group("obstacles"):
+		print_debug("Moving coin")
+		position = Vector2(randi_range(0, screensize.x), randi_range(0, screensize.y))

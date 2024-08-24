@@ -118,6 +118,7 @@ func gameOver():
 	gameStarted = false
 		
 func spawnCoins():
+	$LevelStartSFX.play()
 	$HUD.showLevel("Level " + str(level))
 	$LevelTextTimer.start()
 	
