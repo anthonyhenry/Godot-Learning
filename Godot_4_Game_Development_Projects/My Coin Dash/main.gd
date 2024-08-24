@@ -98,21 +98,24 @@ func _on_game_timer_timeout():
 		
 	# Game over
 	if timeRemaining == 0:
-		# Play game over sfx
-		$GameOverSFX.play()
-		# Stop the timer from infinitely ticking
-		$GameTimer.paused = true
-		# Stop powerup from spawning
-		$PowerupSpawnTimer.paused = true
-		# Run player game over function (sets hurt animation)
-		$Player.gameOver()
-		# Show game over text
-		$HUD.show_text("Game Over")
+		gameOver()
 		
-		# Start game over timer
-		$GameOverTimer.start()
-		gamePaused = true
-		gameStarted = false
+func gameOver():
+	# Play game over sfx
+	$GameOverSFX.play()
+	# Stop the timer from infinitely ticking
+	$GameTimer.paused = true
+	# Stop powerup from spawning
+	$PowerupSpawnTimer.paused = true
+	# Run player game over function (sets hurt animation)
+	$Player.gameOver()
+	# Show game over text
+	$HUD.show_text("Game Over")
+		
+	# Start game over timer
+	$GameOverTimer.start()
+	gamePaused = true
+	gameStarted = false
 		
 func spawnCoins():
 	$HUD.showLevel("Level " + str(level))
@@ -189,6 +192,9 @@ func _on_game_over_timer_timeout():
 	$HUD.set_start_button_text("Retry")
 	# Delete player
 	$Player.queue_free()
+	# Delete cacti
+	for cactus in get_tree().get_nodes_in_group("obstacles"):
+		cactus.queue_free()
 	# Despawn coins
 	for coin in get_tree().get_nodes_in_group("coins"):
 		coin.despawn()

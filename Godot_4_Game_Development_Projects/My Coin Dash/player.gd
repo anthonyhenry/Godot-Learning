@@ -65,7 +65,10 @@ func _on_area_entered(area):
 		$SpeedBoostTimer.start()
 		area.playerPickup()
 	if area.is_in_group("obstacles"):
+		if get_parent().get_name() == "Main":
+			get_parent().gameOver()
 		print_debug("Ouch!")
+		
 
 func gameOver():
 	paused = true
