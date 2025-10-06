@@ -28,10 +28,25 @@ var attack_target: Unit
 # Reference to Nav Agent Node
 @onready var agent: NavigationAgent2D = $NavigationAgent2D
 
+func _ready():
+	set_move_to_target(Vector2.ZERO)
+
 # This function gets called each frame
 func _process(delta):
-	pass
-	
+	# Stop moving once target is reached. Need this to prevent jittering once object reaches target position
+	if(not agent.is_target_reached()):
+		_move(delta)
+
+func _move(delta):
+	# Get next position in path from Nav Agent
+	var move_pos = agent.get_next_path_position()
+	# Get vector of the direction to next position
+	var move_dir = global_position.direction_to(move_pos)
+	# Movement per frame vector
+	var movement = move_dir * move_speed * delta
+	# Add vector to current position
+	translate(movement)
+
 # Check how far the unit is away from its target to determine if it can attack or not
 func _target_check():
 	pass
@@ -39,9 +54,12 @@ func _target_check():
 func _try_attack_target():
 	pass
 
-# Set a target to chase after
+# Set a target to move to
 func set_move_to_target(target: Vector2):
-	pass
+	# Calculate a path to the target position using the Nav Agent node
+	agent.target_position = target
+	# Don't attack if moving to a position 
+	attack_target = null 
 
 # Set target to attack
 func set_attack_target (target: Unit):
