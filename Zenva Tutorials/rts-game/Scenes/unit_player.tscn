@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://b46jyyvcr10cg"]
+
+[ext_resource type="PackedScene" uid="uid://dmw56mcdo7h0c" path="res://Scenes/unit_base.tscn" id="1_dr6x0"]
+[ext_resource type="Script" uid="uid://cnb6kifc743q3" path="res://Scripts/player_unit.gd" id="2_66hmh"]
+[ext_resource type="Texture2D" uid="uid://icor8sjs5xki" path="res://Sprites/Characters/tile_0097.png" id="3_qq154"]
+
+[sub_resource type="Gradient" id="Gradient_dr6x0"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0, 1, 0.32941177, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_to24h"]
+gradient = SubResource("Gradient_dr6x0")
+
+[node name="Unit_Player" instance=ExtResource("1_dr6x0")]
+
+[node name="PlayerUnit" type="Node" parent="." index="0"]
+script = ExtResource("2_66hmh")
+
+[node name="Selection Visual" type="Sprite2D" parent="." index="1"]
+visible = false
+position = Vector2(-4.172325e-07, 6.5)
+scale = Vector2(0.078125, 7)
+texture = SubResource("GradientTexture1D_to24h")
+
+[node name="Sprite" parent="." index="2"]
+texture = ExtResource("3_qq154")
