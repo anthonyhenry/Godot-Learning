@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=4 uid="uid://ldxaubkub247"]
+[gd_scene load_steps=8 format=4 uid="uid://ldxaubkub247"]
 
+[ext_resource type="Script" uid="uid://ujhxno6a26un" path="res://Scripts/game_manager.gd" id="1_21xkr"]
 [ext_resource type="TileSet" uid="uid://oe5h7p1sosl8" path="res://Sprites/Tiles/new_tile_set.tres" id="1_jjgbg"]
 [ext_resource type="Script" uid="uid://dwhidpfohtx7w" path="res://Scripts/camera_controller.gd" id="1_kry3j"]
 [ext_resource type="PackedScene" uid="uid://b46jyyvcr10cg" path="res://Scenes/unit_player.tscn" id="3_8gbba"]
@@ -12,6 +13,7 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32
 outlines = Array[PackedVector2Array]([PackedVector2Array(-255, -96, 255, -95, 256, 126, -256, 127)])
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_21xkr")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
