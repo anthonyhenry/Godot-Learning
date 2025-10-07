@@ -18,7 +18,7 @@ border_width_right = 5
 border_width_bottom = 5
 border_color = Color(0.23921569, 0.2509804, 0.24313726, 1)
 
-[node name="Unit_Base" type="Area2D"]
+[node name="Unit_Base" type="Area2D" groups=["Unit"]]
 script = ExtResource("1_2vsbj")
 move_speed = 30.0
 
