@@ -39,8 +39,21 @@ func _unselect_unit ():
 	selected_unit = null
 
 func _try_command_unit():
-	pass
-
+	# Can only command if there is a unit selected
+	if selected_unit == null:
+		return
+	
+	# Check if a unit was clicked
+	var target = _get_selected_unit()
+	if target != null:
+		# If an enemy unit was clicked, attack it
+		if target.team != Unit.Team.PLAYER:
+			selected_unit.set_attack_target(target)
+	# If a unit was not clicked, move to the mouse position
+	else:
+		selected_unit.set_move_to_target(get_global_mouse_position())
+			
+	
 func _get_selected_unit () -> Unit:
 	# Get the collider that the mouse is currently hovering over
 	var space = get_world_2d().direct_space_state

@@ -28,8 +28,8 @@ var attack_target: Unit
 # Reference to Nav Agent Node
 @onready var agent: NavigationAgent2D = $NavigationAgent2D
 
-func _ready():
-	set_move_to_target(Vector2.ZERO)
+#func _ready():
+	#set_move_to_target(Vector2.ZERO)
 
 # This function gets called each frame
 func _process(delta):
