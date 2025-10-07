@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dmw56mcdo7h0c"]
+[gd_scene load_steps=7 format=3 uid="uid://dmw56mcdo7h0c"]
 
 [ext_resource type="Script" uid="uid://devslagfom0ya" path="res://Scripts/unit.gd" id="1_2vsbj"]
 [ext_resource type="Texture2D" uid="uid://bpgebaup8d8g8" path="res://Sprites/Characters/tile_0087.png" id="1_yagyl"]
+[ext_resource type="Script" uid="uid://cx80nwkdkxx1h" path="res://Scripts/unit_health_bar.gd" id="3_aj46g"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yagyl"]
 radius = 8.0
@@ -41,3 +42,4 @@ theme_override_styles/background = SubResource("StyleBoxFlat_2vsbj")
 theme_override_styles/fill = SubResource("StyleBoxFlat_aj46g")
 value = 60.0
 show_percentage = false
+script = ExtResource("3_aj46g")

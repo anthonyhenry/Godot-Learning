@@ -47,7 +47,7 @@ carve_navigation_mesh = true
 
 [node name="Unit_Base" parent="." instance=ExtResource("2_bo1nx")]
 position = Vector2(-195, -6)
-move_speed = 30.0
+team = 1
 
 [node name="Unit_Player" parent="." instance=ExtResource("3_8gbba")]
 position = Vector2(209, 0)
