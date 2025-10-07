@@ -19,6 +19,7 @@ border_color = Color(0.23921569, 0.2509804, 0.24313726, 1)
 
 [node name="Unit_Base" type="Area2D"]
 script = ExtResource("1_2vsbj")
+move_speed = 30.0
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_yagyl")

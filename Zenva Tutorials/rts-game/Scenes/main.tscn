@@ -51,6 +51,7 @@ move_speed = 30.0
 
 [node name="Unit_Player" parent="." instance=ExtResource("3_8gbba")]
 position = Vector2(209, 0)
+team = 1
 
 [node name="Unit_Player2" parent="." instance=ExtResource("3_8gbba")]
 position = Vector2(-35, -71)

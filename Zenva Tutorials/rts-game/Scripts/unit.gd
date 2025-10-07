@@ -34,8 +34,10 @@ var attack_target: Unit
 # This function gets called each frame
 func _process(delta):
 	# Stop moving once target is reached. Need this to prevent jittering once object reaches target position
-	if(not agent.is_target_reached()):
+	if(not agent.is_navigation_finished()):
 		_move(delta)
+	
+	_target_check()
 
 func _move(delta):
 	# Get next position in path from Nav Agent
@@ -49,11 +51,30 @@ func _move(delta):
 
 # Check how far the unit is away from its target to determine if it can attack or not
 func _target_check():
-	pass
+	# Do nothing if there is no target to attack
+	if attack_target == null:
+		return
+	
+	# Check if target is within range
+	var dist = global_position.distance_to(attack_target.global_position)
+	if dist <= attack_range:
+		# Stop moving
+		agent.target_position = global_position
+		# Attack target
+		_try_attack_target()
+	else:
+		agent.target_position = attack_target.global_position
 
 func _try_attack_target():
-	pass
-
+	var time = Time.get_unix_time_from_system()
+	
+	# Only attack if enough time has passed since last attack
+	if time - last_attack_time < attack_rate:
+		return
+	
+	last_attack_time = time
+	attack_target.take_damage(attack_damage)	
+	
 # Set a target to move to
 func set_move_to_target(target: Vector2):
 	# Calculate a path to the target position using the Nav Agent node
@@ -63,10 +84,18 @@ func set_move_to_target(target: Vector2):
 
 # Set target to attack
 func set_attack_target (target: Unit):
-	pass
+	# Do not attack teammates
+	if target.team == team:
+		return
+	
+	attack_target = target
 
 func take_damage(amount : int):
-	pass
+	cur_hp -= amount
+	OnTakeDamage.emit(cur_hp)
+	if cur_hp <= 0:
+		_die()
 
 func _die():
-	pass
+	OnDie.emit(self)
+	queue_free()
